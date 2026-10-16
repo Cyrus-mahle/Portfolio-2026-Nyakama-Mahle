@@ -21,8 +21,6 @@
     <meta name="twitter:title" content="Nyakama Mahle | Fullstack Software Engineer">
     <meta name="twitter:description" content="I build modern, scalable web applications and solve real-world problems with code.">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- FontAwesome & Lucide Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -32,68 +30,489 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                        },
-                        accent: '#38bdf8',
-                        darkbg: '#090d16',
-                        darkcard: '#111827',
-                        darkborder: '#1f293d',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        .glass-nav {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .glow-effect {
-            box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.25);
-        }
-        .glow-effect:hover {
-            box-shadow: 0 0 45px -2px rgba(56, 189, 248, 0.4);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* ===== Base reset ===== */
+    *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;tab-size:4;font-family:'Plus Jakarta Sans',sans-serif}
+    body{margin:0;line-height:inherit}
+    h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit;margin:0}
+    p,blockquote,figure,dl,dd,pre{margin:0}
+    a{color:inherit;text-decoration:inherit}
+    ul,ol,menu{list-style:none;margin:0;padding:0}
+    img,svg,video,iframe{display:block;vertical-align:middle}
+    img,video{max-width:100%;height:auto}
+    button,input,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}
+    button{background-color:transparent;background-image:none;cursor:pointer;-webkit-appearance:button}
+    input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}
+    textarea{resize:vertical}
+    [hidden]{display:none}
+
+    /* ===== Custom components ===== */
+    .glass-nav {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+    .glow-effect {
+        box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.25);
+    }
+    .glow-effect:hover {
+        box-shadow: 0 0 45px -2px rgba(56, 189, 248, 0.4);
+    }
+    .gradient-text {
+        background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .scroll-reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ===== Animations ===== */
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes pulse{50%{opacity:.5}}
+    @keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}
+    @keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+
+    /* ===== Layout, colour and spacing utilities (dark mode = .dark on <html>) ===== */
+    .absolute{position:absolute}
+    .fixed{position:fixed}
+    .relative{position:relative}
+    .inset-0{inset:0}
+    .top-0{top:0}
+    .top-1\.5{top:0.375rem}
+    .top-1\/3{top:33.333333%}
+    .top-1\/4{top:25%}
+    .top-3{top:0.75rem}
+    .top-4{top:1rem}
+    .-right-2{right:-0.5rem}
+    .right-0{right:0}
+    .right-10{right:2.5rem}
+    .right-4{right:1rem}
+    .right-5{right:1.25rem}
+    .-bottom-2{bottom:-0.5rem}
+    .bottom-5{bottom:1.25rem}
+    .-left-2{left:-0.5rem}
+    .left-0{left:0}
+    .left-1\/2{left:50%}
+    .left-2\.5{left:0.625rem}
+    .left-3{left:0.75rem}
+    .-z-10{z-index:-10}
+    .z-50{z-index:50}
+    .z-\[60\]{z-index:60}
+    .mx-auto{margin-left:auto;margin-right:auto}
+    .mt-0\.5{margin-top:0.125rem}
+    .mt-1{margin-top:0.25rem}
+    .mt-2{margin-top:0.5rem}
+    .mt-3{margin-top:0.75rem}
+    .mt-4{margin-top:1rem}
+    .mt-6{margin-top:1.5rem}
+    .mt-8{margin-top:2rem}
+    .mr-1{margin-right:0.25rem}
+    .mr-1\.5{margin-right:0.375rem}
+    .mr-2{margin-right:0.5rem}
+    .mr-2\.5{margin-right:0.625rem}
+    .mb-12{margin-bottom:3rem}
+    .mb-16{margin-bottom:4rem}
+    .mb-2{margin-bottom:0.5rem}
+    .mb-3{margin-bottom:0.75rem}
+    .mb-4{margin-bottom:1rem}
+    .mb-6{margin-bottom:1.5rem}
+    .mb-8{margin-bottom:2rem}
+    .ml-2{margin-left:0.5rem}
+    .ml-2\.5{margin-left:0.625rem}
+    .block{display:block}
+    .inline-block{display:inline-block}
+    .flex{display:flex}
+    .inline-flex{display:inline-flex}
+    .grid{display:grid}
+    .hidden{display:none}
+    .aspect-square{aspect-ratio:1 / 1}
+    .h-10{height:2.5rem}
+    .h-12{height:3rem}
+    .h-2\.5{height:0.625rem}
+    .h-20{height:5rem}
+    .h-3\.5{height:0.875rem}
+    .h-72{height:18rem}
+    .h-9{height:2.25rem}
+    .h-\[600px\]{height:600px}
+    .h-\[90vh\]{height:90vh}
+    .h-full{height:100%}
+    .min-h-screen{min-height:100vh}
+    .w-10{width:2.5rem}
+    .w-12{width:3rem}
+    .w-2{width:0.5rem}
+    .w-2\.5{width:0.625rem}
+    .w-3\.5{width:0.875rem}
+    .w-72{width:18rem}
+    .w-9{width:2.25rem}
+    .w-\[600px\]{width:600px}
+    .w-full{width:100%}
+    .min-w-0{min-width:0}
+    .max-w-2xl{max-width:42rem}
+    .max-w-3xl{max-width:48rem}
+    .max-w-4xl{max-width:56rem}
+    .max-w-6xl{max-width:72rem}
+    .max-w-7xl{max-width:80rem}
+    .max-w-lg{max-width:32rem}
+    .flex-1{flex:1 1 0%}
+    .flex-grow{flex-grow:1}
+    .shrink-0{flex-shrink:0}
+    .-translate-x-1\/2{--tx:-50%;transform:translate(var(--tx,0),var(--ty,0)) scale(var(--sx,1),var(--sy,1))}
+    .animate-bounce{animation:bounce 1s infinite}
+    .animate-float{animation:float 3s ease-in-out infinite}
+    .animate-ping{animation:ping 1s cubic-bezier(0,0,.2,1) infinite}
+    .animate-pulse-slow{animation:pulse 4s cubic-bezier(.4,0,.6,1) infinite}
+    .grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .flex-col{flex-direction:column}
+    .flex-wrap{flex-wrap:wrap}
+    .items-center{align-items:center}
+    .items-end{align-items:flex-end}
+    .items-start{align-items:flex-start}
+    .justify-between{justify-content:space-between}
+    .justify-center{justify-content:center}
+    .justify-end{justify-content:flex-end}
+    .gap-1{gap:0.25rem}
+    .gap-10{gap:2.5rem}
+    .gap-12{gap:3rem}
+    .gap-2{gap:0.5rem}
+    .gap-3{gap:0.75rem}
+    .gap-4{gap:1rem}
+    .gap-6{gap:1.5rem}
+    .gap-8{gap:2rem}
+    .space-x-1 > :not([hidden]) ~ :not([hidden]){margin-left:0.25rem}
+    .space-x-3 > :not([hidden]) ~ :not([hidden]){margin-left:0.75rem}
+    .space-x-6 > :not([hidden]) ~ :not([hidden]){margin-left:1.5rem}
+    .space-y-2 > :not([hidden]) ~ :not([hidden]){margin-top:0.5rem}
+    .space-y-3 > :not([hidden]) ~ :not([hidden]){margin-top:0.75rem}
+    .space-y-4 > :not([hidden]) ~ :not([hidden]){margin-top:1rem}
+    .space-y-6 > :not([hidden]) ~ :not([hidden]){margin-top:1.5rem}
+    .overflow-hidden{overflow:hidden}
+    .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .object-cover{object-fit:cover}
+    .rounded-2xl{border-radius:1rem}
+    .rounded-full{border-radius:9999px}
+    .rounded-lg{border-radius:.5rem}
+    .rounded-md{border-radius:.375rem}
+    .rounded-xl{border-radius:.75rem}
+    .border{border-width:1px}
+    .border-0{border-width:0px}
+    .border-4{border-width:4px}
+    .border-y{border-top-width:1px;border-bottom-width:1px}
+    .border-t{border-top-width:1px}
+    .border-b{border-bottom-width:1px}
+    .border-indigo-200{border-color:#c7d2fe}
+    .border-indigo-600{border-color:#4f46e5}
+    .border-slate-100{border-color:#f1f5f9}
+    .border-slate-200{border-color:#e2e8f0}
+    .border-slate-200\/70{border-color:rgb(226 232 240 / 0.7)}
+    .border-slate-200\/80{border-color:rgb(226 232 240 / 0.8)}
+    .border-slate-800{border-color:#1e293b}
+    .border-white{border-color:#ffffff}
+    .bg-gradient-to-t{background-image:linear-gradient(to top,var(--gs))}
+    .bg-gradient-to-tr{background-image:linear-gradient(to top right,var(--gs))}
+    .from-indigo-500{--gf:#6366f1;--gs:var(--gf),var(--gt,transparent)}
+    .from-indigo-600{--gf:#4f46e5;--gs:var(--gf),var(--gt,transparent)}
+    .from-slate-950\/80{--gf:rgb(2 6 23 / 0.8);--gs:var(--gf),var(--gt,transparent)}
+    .via-sky-400{--gs:var(--gf,transparent),#38bdf8,var(--gt,transparent)}
+    .via-transparent{--gs:var(--gf,transparent),transparent,var(--gt,transparent)}
+    .to-indigo-800{--gt:#3730a3}
+    .to-sky-400{--gt:#38bdf8}
+    .to-transparent{--gt:transparent}
+    .bg-accent{background-color:#38bdf8}
+    .bg-amber-50{background-color:#fffbeb}
+    .bg-amber-500{background-color:#f59e0b}
+    .bg-amber-500\/10{background-color:rgb(245 158 11 / 0.1)}
+    .bg-blue-500\/10{background-color:rgb(59 130 246 / 0.1)}
+    .bg-emerald-50{background-color:#ecfdf5}
+    .bg-emerald-500{background-color:#10b981}
+    .bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}
+    .bg-indigo-50{background-color:#eef2ff}
+    .bg-indigo-500\/10{background-color:rgb(99 102 241 / 0.1)}
+    .bg-indigo-600{background-color:#4f46e5}
+    .bg-purple-50{background-color:#faf5ff}
+    .bg-purple-500\/10{background-color:rgb(168 85 247 / 0.1)}
+    .bg-rose-50{background-color:#fff1f2}
+    .bg-rose-500\/10{background-color:rgb(244 63 94 / 0.1)}
+    .bg-sky-400{background-color:#38bdf8}
+    .bg-sky-50{background-color:#f0f9ff}
+    .bg-sky-500{background-color:#0ea5e9}
+    .bg-sky-500\/10{background-color:rgb(14 165 233 / 0.1)}
+    .bg-slate-100{background-color:#f1f5f9}
+    .bg-slate-100\/70{background-color:rgb(241 245 249 / 0.7)}
+    .bg-slate-200{background-color:#e2e8f0}
+    .bg-slate-400{background-color:#94a3b8}
+    .bg-slate-50{background-color:#f8fafc}
+    .bg-slate-800{background-color:#1e293b}
+    .bg-slate-900{background-color:#0f172a}
+    .bg-slate-950\/0{background-color:rgb(2 6 23 / 0)}
+    .bg-slate-950\/70{background-color:rgb(2 6 23 / 0.7)}
+    .bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}
+    .bg-teal-50{background-color:#f0fdfa}
+    .bg-teal-500\/10{background-color:rgb(20 184 166 / 0.1)}
+    .bg-white{background-color:#ffffff}
+    .bg-white\/80{background-color:rgb(255 255 255 / 0.8)}
+    .p-1{padding:0.25rem}
+    .p-2{padding:0.5rem}
+    .p-2\.5{padding:0.625rem}
+    .p-3{padding:0.75rem}
+    .p-4{padding:1rem}
+    .p-6{padding:1.5rem}
+    .p-8{padding:2rem}
+    .px-2\.5{padding-left:0.625rem;padding-right:0.625rem}
+    .px-3{padding-left:0.75rem;padding-right:0.75rem}
+    .px-3\.5{padding-left:0.875rem;padding-right:0.875rem}
+    .px-4{padding-left:1rem;padding-right:1rem}
+    .px-5{padding-left:1.25rem;padding-right:1.25rem}
+    .px-6{padding-left:1.5rem;padding-right:1.5rem}
+    .py-1{padding-top:0.25rem;padding-bottom:0.25rem}
+    .py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}
+    .py-12{padding-top:3rem;padding-bottom:3rem}
+    .py-2{padding-top:0.5rem;padding-bottom:0.5rem}
+    .py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}
+    .py-20{padding-top:5rem;padding-bottom:5rem}
+    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+    .py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}
+    .py-4{padding-top:1rem;padding-bottom:1rem}
+    .pt-0{padding-top:0}
+    .pt-12{padding-top:3rem}
+    .pt-2{padding-top:0.5rem}
+    .pt-20{padding-top:5rem}
+    .pt-4{padding-top:1rem}
+    .pt-6{padding-top:1.5rem}
+    .pb-20{padding-bottom:5rem}
+    .pb-6{padding-bottom:1.5rem}
+    .pl-10{padding-left:2.5rem}
+    .text-center{text-align:center}
+    .font-mono{font-family:'Fira Code',monospace}
+    .font-sans{font-family:'Plus Jakarta Sans',sans-serif}
+    .font-bold{font-weight:700}
+    .font-extrabold{font-weight:800}
+    .font-medium{font-weight:500}
+    .font-semibold{font-weight:600}
+    .text-2xl{font-size:1.5rem;line-height:2rem}
+    .text-3xl{font-size:1.875rem;line-height:2.25rem}
+    .text-4xl{font-size:2.25rem;line-height:2.5rem}
+    .text-\[10px\]{font-size:10px}
+    .text-base{font-size:1rem;line-height:1.5rem}
+    .text-lg{font-size:1.125rem;line-height:1.75rem}
+    .text-sm{font-size:.875rem;line-height:1.25rem}
+    .text-xl{font-size:1.25rem;line-height:1.75rem}
+    .text-xs{font-size:.75rem;line-height:1rem}
+    .leading-\[1\.15\]{line-height:1.15}
+    .leading-none{line-height:1}
+    .leading-relaxed{line-height:1.625}
+    .tracking-tight{letter-spacing:-.025em}
+    .tracking-wide{letter-spacing:.025em}
+    .tracking-wider{letter-spacing:.05em}
+    .tracking-widest{letter-spacing:.1em}
+    .uppercase{text-transform:uppercase}
+    .italic{font-style:italic}
+    .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .scroll-smooth{scroll-behavior:smooth}
+    .text-accent{color:#38bdf8}
+    .text-amber-400{color:#fbbf24}
+    .text-amber-500{color:#f59e0b}
+    .text-amber-600{color:#d97706}
+    .text-blue-400{color:#60a5fa}
+    .text-blue-500{color:#3b82f6}
+    .text-cyan-400{color:#22d3ee}
+    .text-emerald-500{color:#10b981}
+    .text-emerald-600{color:#059669}
+    .text-green-500{color:#22c55e}
+    .text-indigo-400{color:#818cf8}
+    .text-indigo-500{color:#6366f1}
+    .text-indigo-600{color:#4f46e5}
+    .text-orange-500{color:#f97316}
+    .text-orange-600{color:#ea580c}
+    .text-purple-400{color:#c084fc}
+    .text-purple-500{color:#a855f7}
+    .text-purple-600{color:#9333ea}
+    .text-red-500{color:#ef4444}
+    .text-rose-500{color:#f43f5e}
+    .text-rose-600{color:#e11d48}
+    .text-sky-400{color:#38bdf8}
+    .text-sky-500{color:#0ea5e9}
+    .text-sky-600{color:#0284c7}
+    .text-slate-300{color:#cbd5e1}
+    .text-slate-400{color:#94a3b8}
+    .text-slate-500{color:#64748b}
+    .text-slate-600{color:#475569}
+    .text-slate-700{color:#334155}
+    .text-slate-800{color:#1e293b}
+    .text-slate-900{color:#0f172a}
+    .text-teal-500{color:#14b8a6}
+    .text-teal-600{color:#0d9488}
+    .text-white{color:#ffffff}
+    .text-yellow-500{color:#eab308}
+    .opacity-0{opacity:0}
+    .opacity-40{opacity:0.4}
+    .shadow{box-shadow:0 1px 3px 0 var(--sc,rgb(0 0 0 / .1)),0 1px 2px -1px var(--sc,rgb(0 0 0 / .1))}
+    .shadow-2xl{box-shadow:0 25px 50px -12px var(--sc,rgb(0 0 0 / .25))}
+    .shadow-lg{box-shadow:0 10px 15px -3px var(--sc,rgb(0 0 0 / .1)),0 4px 6px -4px var(--sc,rgb(0 0 0 / .1))}
+    .shadow-md{box-shadow:0 4px 6px -1px var(--sc,rgb(0 0 0 / .1)),0 2px 4px -2px var(--sc,rgb(0 0 0 / .1))}
+    .shadow-sm{box-shadow:0 1px 2px 0 var(--sc,rgb(0 0 0 / .05))}
+    .shadow-xl{box-shadow:0 20px 25px -5px var(--sc,rgb(0 0 0 / .1)),0 8px 10px -6px var(--sc,rgb(0 0 0 / .1))}
+    .shadow-indigo-500\/25{--sc:rgb(99 102 241 / 0.25)}
+    .ring-4{box-shadow:0 0 0 4px var(--rc,rgb(59 130 246 / .5))}
+    .ring-white{--rc:#ffffff}
+    .blur-2xl{filter:blur(40px)}
+    .blur-3xl{filter:blur(64px)}
+    .blur-lg{filter:blur(16px)}
+    .backdrop-blur-md{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+    .backdrop-blur-sm{-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+    .pointer-events-none{pointer-events:none}
+    .transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+    .transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+    .transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+    .transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+    .duration-300{transition-duration:300ms}
+    .duration-500{transition-duration:500ms}
+    .selection\:bg-indigo-500 *::selection,.selection\:bg-indigo-500::selection{background-color:#6366f1}
+    .selection\:text-white *::selection,.selection\:text-white::selection{color:#ffffff}
+    .before\:absolute::before{content:'';position:absolute}
+    .before\:inset-0::before{content:'';inset:0}
+    .before\:left-4::before{content:'';left:1rem}
+    .before\:w-0\.5::before{content:'';width:0.125rem}
+    .before\:bg-slate-200::before{content:'';background-color:#e2e8f0}
+    .group:hover .group-hover\:scale-105{--sx:1.05;--sy:1.05;transform:translate(var(--tx,0),var(--ty,0)) scale(var(--sx,1),var(--sy,1))}
+    .group:hover .group-hover\:scale-110{--sx:1.1;--sy:1.1;transform:translate(var(--tx,0),var(--ty,0)) scale(var(--sx,1),var(--sy,1))}
+    .group:hover .group-hover\:text-amber-500{color:#f59e0b}
+    .group:hover .group-hover\:text-emerald-500{color:#10b981}
+    .group:hover .group-hover\:text-indigo-500{color:#6366f1}
+    .group:hover .group-hover\:text-purple-500{color:#a855f7}
+    .group:hover .group-hover\:text-rose-500{color:#f43f5e}
+    .group:hover .group-hover\:text-sky-500{color:#0ea5e9}
+    .group:hover .group-hover\:text-teal-500{color:#14b8a6}
+    .group:hover .group-hover\:opacity-100{opacity:1}
+    .hover\:-translate-y-0\.5:hover{--ty:-0.125rem;transform:translate(var(--tx,0),var(--ty,0)) scale(var(--sx,1),var(--sy,1))}
+    .hover\:scale-105:hover{--sx:1.05;--sy:1.05;transform:translate(var(--tx,0),var(--ty,0)) scale(var(--sx,1),var(--sy,1))}
+    .hover\:border-indigo-500:hover{border-color:#6366f1}
+    .hover\:border-indigo-500\/50:hover{border-color:rgb(99 102 241 / 0.5)}
+    .hover\:bg-indigo-50:hover{background-color:#eef2ff}
+    .hover\:bg-indigo-700:hover{background-color:#4338ca}
+    .hover\:bg-slate-100:hover{background-color:#f1f5f9}
+    .hover\:bg-slate-950\/50:hover{background-color:rgb(2 6 23 / 0.5)}
+    .hover\:text-indigo-500:hover{color:#6366f1}
+    .hover\:text-indigo-600:hover{color:#4f46e5}
+    .hover\:text-slate-600:hover{color:#475569}
+    .hover\:text-slate-700:hover{color:#334155}
+    .hover\:text-white:hover{color:#ffffff}
+    .hover\:opacity-100:hover{opacity:1}
+    .hover\:shadow-lg:hover{box-shadow:0 10px 15px -3px var(--sc,rgb(0 0 0 / .1)),0 4px 6px -4px var(--sc,rgb(0 0 0 / .1))}
+    .hover\:shadow-xl:hover{box-shadow:0 20px 25px -5px var(--sc,rgb(0 0 0 / .1)),0 8px 10px -6px var(--sc,rgb(0 0 0 / .1))}
+    .hover\:shadow-indigo-500\/40:hover{--sc:rgb(99 102 241 / 0.4)}
+    .hover\:underline:hover{text-decoration-line:underline}
+    .focus\:opacity-100:focus{opacity:1}
+    .focus\:ring-2:focus{box-shadow:0 0 0 2px var(--rc,rgb(59 130 246 / .5))}
+    .focus\:ring-indigo-500:focus{--rc:#6366f1}
+    .focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}
+    .active\:scale-95:active{--sx:0.95;--sy:0.95;transform:translate(var(--tx,0),var(--ty,0)) scale(var(--sx,1),var(--sy,1))}
+    .dark .dark\:block{display:block}
+    .dark .dark\:hidden{display:none}
+    .dark .dark\:border-accent{border-color:#38bdf8}
+    .dark .dark\:border-darkbg{border-color:#090d16}
+    .dark .dark\:border-darkborder{border-color:#1f293d}
+    .dark .dark\:border-indigo-800\/60{border-color:rgb(55 48 163 / 0.6)}
+    .dark .dark\:border-slate-700{border-color:#334155}
+    .dark .dark\:border-slate-700\/50{border-color:rgb(51 65 85 / 0.5)}
+    .dark .dark\:border-slate-700\/60{border-color:rgb(51 65 85 / 0.6)}
+    .dark .dark\:border-slate-700\/80{border-color:rgb(51 65 85 / 0.8)}
+    .dark .dark\:border-slate-800{border-color:#1e293b}
+    .dark .dark\:border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}
+    .dark .dark\:bg-amber-950\/80{background-color:rgb(69 26 3 / 0.8)}
+    .dark .dark\:bg-darkbg{background-color:#090d16}
+    .dark .dark\:bg-darkbg\/80{background-color:rgb(9 13 22 / 0.8)}
+    .dark .dark\:bg-darkcard{background-color:#111827}
+    .dark .dark\:bg-darkcard\/90{background-color:rgb(17 24 39 / 0.9)}
+    .dark .dark\:bg-emerald-950\/80{background-color:rgb(2 44 34 / 0.8)}
+    .dark .dark\:bg-indigo-500\/15{background-color:rgb(99 102 241 / 0.15)}
+    .dark .dark\:bg-indigo-600{background-color:#4f46e5}
+    .dark .dark\:bg-indigo-950\/60{background-color:rgb(30 27 75 / 0.6)}
+    .dark .dark\:bg-indigo-950\/80{background-color:rgb(30 27 75 / 0.8)}
+    .dark .dark\:bg-purple-950\/80{background-color:rgb(59 7 100 / 0.8)}
+    .dark .dark\:bg-rose-950\/80{background-color:rgb(76 5 25 / 0.8)}
+    .dark .dark\:bg-sky-950\/80{background-color:rgb(8 47 73 / 0.8)}
+    .dark .dark\:bg-slate-600{background-color:#475569}
+    .dark .dark\:bg-slate-800{background-color:#1e293b}
+    .dark .dark\:bg-slate-800\/50{background-color:rgb(30 41 59 / 0.5)}
+    .dark .dark\:bg-slate-800\/80{background-color:rgb(30 41 59 / 0.8)}
+    .dark .dark\:bg-slate-900{background-color:#0f172a}
+    .dark .dark\:bg-slate-900\/40{background-color:rgb(15 23 42 / 0.4)}
+    .dark .dark\:bg-teal-950\/80{background-color:rgb(4 47 46 / 0.8)}
+    .dark .dark\:text-accent{color:#38bdf8}
+    .dark .dark\:text-amber-300{color:#fcd34d}
+    .dark .dark\:text-emerald-300{color:#6ee7b7}
+    .dark .dark\:text-emerald-400{color:#34d399}
+    .dark .dark\:text-indigo-300{color:#a5b4fc}
+    .dark .dark\:text-indigo-400{color:#818cf8}
+    .dark .dark\:text-purple-300{color:#d8b4fe}
+    .dark .dark\:text-rose-300{color:#fda4af}
+    .dark .dark\:text-sky-300{color:#7dd3fc}
+    .dark .dark\:text-slate-100{color:#f1f5f9}
+    .dark .dark\:text-slate-200{color:#e2e8f0}
+    .dark .dark\:text-slate-300{color:#cbd5e1}
+    .dark .dark\:text-slate-400{color:#94a3b8}
+    .dark .dark\:text-teal-300{color:#5eead4}
+    .dark .dark\:text-white{color:#ffffff}
+    .dark .dark\:ring-darkbg{--rc:#090d16}
+    .dark .dark\:before\:bg-slate-800::before{content:'';background-color:#1e293b}
+    .dark .dark\:hover\:bg-indigo-500:hover{background-color:#6366f1}
+    .dark .dark\:hover\:bg-slate-800:hover{background-color:#1e293b}
+    .dark .dark\:hover\:bg-slate-800\/60:hover{background-color:rgb(30 41 59 / 0.6)}
+    .dark .dark\:hover\:text-accent:hover{color:#38bdf8}
+    .dark .dark\:hover\:text-white:hover{color:#ffffff}
+    @media (min-width:640px){
+      .sm\:right-0{right:0}
+      .sm\:bottom-2{bottom:0.5rem}
+      .sm\:left-0{left:0}
+      .sm\:flex{display:flex}
+      .sm\:inline-flex{display:inline-flex}
+      .sm\:h-80{height:20rem}
+      .sm\:w-80{width:20rem}
+      .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .sm\:p-6{padding:1.5rem}
+      .sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}
+      .sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}
+      .sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}
+      .sm\:text-5xl{font-size:3rem;line-height:1}
+      .sm\:text-base{font-size:1rem;line-height:1.5rem}
+      .sm\:text-lg{font-size:1.125rem;line-height:1.75rem}
+      .sm\:text-sm{font-size:.875rem;line-height:1.25rem}
+    }
+    @media (min-width:768px){
+      .md\:flex{display:flex}
+      .md\:hidden{display:none}
+      .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .md\:py-28{padding-top:7rem;padding-bottom:7rem}
+    }
+    @media (min-width:1024px){
+      .lg\:col-span-1{grid-column:span 1 / span 1}
+      .lg\:col-span-5{grid-column:span 5 / span 5}
+      .lg\:col-span-7{grid-column:span 7 / span 7}
+      .lg\:mx-0{margin-left:0;margin-right:0}
+      .lg\:h-96{height:24rem}
+      .lg\:w-96{width:24rem}
+      .lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+      .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+      .lg\:justify-start{justify-content:flex-start}
+      .lg\:gap-8{gap:2rem}
+      .lg\:space-x-2 > :not([hidden]) ~ :not([hidden]){margin-left:0.5rem}
+      .lg\:px-8{padding-left:2rem;padding-right:2rem}
+      .lg\:text-left{text-align:left}
+      .lg\:text-4xl{font-size:2.25rem;line-height:2.5rem}
+      .lg\:text-6xl{font-size:3.75rem;line-height:1}
+    }
     </style>
 </head>
 
@@ -166,7 +585,7 @@
                     
                     <div class="lg:col-span-7 space-y-6 text-center lg:text-left scroll-reveal">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/60 text-indigo-600 dark:text-indigo-400 text-xs sm:text-sm font-semibold tracking-wide">
-                            <span class="animate-bounce">👋</span> Hello, I'm
+                            <span class="animate-bounce"><i class="fa-solid fa-hand"></i></span> Hello, I'm
                         </div>
 
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
@@ -370,7 +789,7 @@
             </div>
         </section>
 
-        <!-- Featured Portfolio Section (All 7 Projects with Live Demo Buttons) -->
+        <!-- Featured Portfolio Section (10 Projects with Live Demo Buttons and Live Previews) -->
         <section id="portfolio" class="py-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
@@ -381,8 +800,136 @@
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
+                    <!-- NEW 1. BNN Financial Services (with live preview) -->
+                    <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://cyrus-mahle.github.io/BNN/" title="BNN Financial Services preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('BNN Financial Services', 'https://cyrus-mahle.github.io/BNN/')" aria-label="Open full preview of BNN Financial Services" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-sky-500 text-white text-[10px] font-bold uppercase tracking-wider shadow">Featured</span>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">
+                                BNN Financial Services
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Professional financial services website presenting the firm's offerings, credibility and client enquiry options in a clean, trustworthy layout.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 rounded-md bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-300 text-xs font-mono">Finance</span><span class="px-2.5 py-1 rounded-md bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-300 text-xs font-mono">Corporate Web</span><span class="px-2.5 py-1 rounded-md bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-300 text-xs font-mono">GitHub Pages</span>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
+                            <button onclick="openProjectModal('BNN Financial Services', 'A corporate web presence for BNN Financial Services, built to communicate financial solutions clearly and convert visitors into client enquiries.', ['HTML5', 'CSS3', 'JavaScript', 'GitHub Pages'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
+                                View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('BNN Financial Services', 'https://cyrus-mahle.github.io/BNN/')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://cyrus-mahle.github.io/BNN/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW 2. M Ngcai Attorneys (with live preview) -->
+                    <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://cyrus-mahle.github.io/mngcai-attorneys/" title="M Ngcai Attorneys preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('M Ngcai Attorneys', 'https://cyrus-mahle.github.io/mngcai-attorneys/')" aria-label="Open full preview of M Ngcai Attorneys" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider shadow">New</span>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors">
+                                M Ngcai Attorneys
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Legal firm website showcasing practice areas, the firm's profile and consultation contact details with a refined navy and gold look.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-300 text-xs font-mono">Legal Firm</span><span class="px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-300 text-xs font-mono">Professional UI</span><span class="px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-300 text-xs font-mono">GitHub Pages</span>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
+                            <button onclick="openProjectModal('M Ngcai Attorneys', 'A professional web platform for M Ngcai Attorneys Inc., designed to present legal services and make it easy for clients to get in touch.', ['HTML5', 'CSS3', 'JavaScript', 'GitHub Pages'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
+                                View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('M Ngcai Attorneys', 'https://cyrus-mahle.github.io/mngcai-attorneys/')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://cyrus-mahle.github.io/mngcai-attorneys/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW 3. Lifromed Health Juice (with live preview) -->
+                    <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://lifromedec.netlify.app/" title="Lifromed Health Juice preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Lifromed Health Juice', 'https://lifromedec.netlify.app/')" aria-label="Open full preview of Lifromed Health Juice" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider shadow">New</span>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors">
+                                Lifromed Health Juice
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Natural health juice brand site (Lifro MED EC) promoting health support products and reseller packages.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-300 text-xs font-mono">Health & Wellness</span><span class="px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-300 text-xs font-mono">Reseller Packages</span><span class="px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-300 text-xs font-mono">Netlify</span>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
+                            <button onclick="openProjectModal('Lifromed Health Juice', 'A product and reseller website for Lifromed Health Juice, highlighting natural health support and making reseller packages easy to explore.', ['HTML5', 'CSS3', 'JavaScript', 'Netlify'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
+                                View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Lifromed Health Juice', 'https://lifromedec.netlify.app/')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://lifromedec.netlify.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- 1. Dr. Peyana 50th Celebration Invitation -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://invite-dr-peyana-50th-celebration.netlify.app/" title="Dr. Peyana 50th Celebration preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Dr. Peyana 50th Celebration', 'https://invite-dr-peyana-50th-celebration.netlify.app/')" aria-label="Open full preview of Dr. Peyana 50th Celebration" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-calendar-star"></i>
@@ -398,18 +945,31 @@
                                 <span class="px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-300 text-xs font-mono">Netlify</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Dr. Peyana 50th Celebration Invitation', 'A custom interactive event invitation web app featuring responsive design and seamless user experience.', ['HTML5', 'CSS3', 'JavaScript', 'Netlify'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://invite-dr-peyana-50th-celebration.netlify.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Dr. Peyana 50th Celebration', 'https://invite-dr-peyana-50th-celebration.netlify.app/')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://invite-dr-peyana-50th-celebration.netlify.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 2. Khaya Engineering -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://www.khayaeng.co.za" title="Khaya Engineering preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Khaya Engineering', 'https://www.khayaeng.co.za')" aria-label="Open full preview of Khaya Engineering" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-gears"></i>
@@ -425,18 +985,31 @@
                                 <span class="px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-300 text-xs font-mono">Responsive UI</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Khaya Engineering', 'Industry standard corporate web presence highlighting engineering services and client project portfolios.', ['HTML/CSS', 'JavaScript', 'Responsive Design'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://www.khayaeng.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Khaya Engineering', 'https://www.khayaeng.co.za')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://www.khayaeng.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 3. Senza Shop (Pty) Ltd -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://www.senzashoptyltd.co.za" title="Senza Shop (Pty) Ltd preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Senza Shop (Pty) Ltd', 'https://www.senzashoptyltd.co.za')" aria-label="Open full preview of Senza Shop (Pty) Ltd" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-hard-hat"></i>
@@ -452,18 +1025,31 @@
                                 <span class="px-2.5 py-1 rounded-md bg-rose-50 dark:bg-rose-950/80 text-rose-600 dark:text-rose-300 text-xs font-mono">Tenders & Private</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Senza Shop (Pty) Ltd', 'A construction enterprise portal showcasing tender capabilities, private building projects, and professional contracting expertise.', ['Construction', 'Tenders', 'Private Projects'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://www.senzashoptyltd.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Senza Shop (Pty) Ltd', 'https://www.senzashoptyltd.co.za')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://www.senzashoptyltd.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 4. Noliki Trading (Pty) Ltd -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://www.nolikitrading.co.za" title="Noliki Trading (Pty) Ltd preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Noliki Trading (Pty) Ltd', 'https://www.nolikitrading.co.za')" aria-label="Open full preview of Noliki Trading (Pty) Ltd" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-building"></i>
@@ -479,18 +1065,31 @@
                                 <span class="px-2.5 py-1 rounded-md bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-300 text-xs font-mono">Business Portal</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Noliki Trading (Pty) Ltd', 'Corporate trading and business services website featuring professional branding and web architecture.', ['Corporate', 'Business Portal', 'Web UI'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://www.nolikitrading.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Noliki Trading (Pty) Ltd', 'https://www.nolikitrading.co.za')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://www.nolikitrading.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 5. Dial A Roof -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://www.dialaroof.co.za" title="Dial A Roof preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Dial A Roof', 'https://www.dialaroof.co.za')" aria-label="Open full preview of Dial A Roof" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-house-chimney"></i>
@@ -506,18 +1105,31 @@
                                 <span class="px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-300 text-xs font-mono">UI/UX</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Dial A Roof Corporate Web Platform', 'Professional business portal designed and optimized for mobile devices, boosting online customer conversions and inquiries.', ['Web Design', 'Frontend', 'SEO Optimization'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://www.dialaroof.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Dial A Roof', 'https://www.dialaroof.co.za')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://www.dialaroof.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 6. Sobekwa 21 -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://www.sobekwa21.co.za" title="Sobekwa 21 preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Sobekwa 21', 'https://www.sobekwa21.co.za')" aria-label="Open full preview of Sobekwa 21" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-laptop-code"></i>
@@ -533,18 +1145,31 @@
                                 <span class="px-2.5 py-1 rounded-md bg-purple-50 dark:bg-purple-950/80 text-purple-600 dark:text-purple-300 text-xs font-mono">Portfolio</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Sobekwa 21', 'Custom digital presence designed with responsive layouts and modern styling.', ['Frontend', 'Responsive Design'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://www.sobekwa21.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Sobekwa 21', 'https://www.sobekwa21.co.za')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://www.sobekwa21.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 7. Cetywayo Attorneys -->
                     <div class="group bg-white dark:bg-darkcard rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden hover:border-indigo-500/50 transition-all duration-300 shadow-md hover:shadow-xl scroll-reveal flex flex-col justify-between lg:col-span-1">
+                        <!-- Live preview thumbnail -->
+                        <div class="preview-thumb relative w-full overflow-hidden bg-slate-200 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-800/80" data-w="1280" data-h="800">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-xs gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading preview…</div>
+                            <iframe data-src="https://www.cetywayoattorneys.co.za" title="Cetywayo Attorneys preview" loading="lazy" tabindex="-1" scrolling="no" sandbox="allow-scripts allow-same-origin" class="preview-frame absolute top-0 left-0 border-0 pointer-events-none bg-white" style="width:1280px;height:800px;transform-origin:top left;"></iframe>
+                            <button onclick="openPreview('Cetywayo Attorneys', 'https://www.cetywayoattorneys.co.za')" aria-label="Open full preview of Cetywayo Attorneys" class="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950/0 hover:bg-slate-950/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-all">
+                                <span class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-lg flex items-center gap-2"><i class="fa-solid fa-eye"></i> Open Preview</span>
+                            </button>
+                        </div>
                         <div class="p-6 space-y-4">
                             <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center text-xl font-bold">
                                 <i class="fa-solid fa-scale-balanced"></i>
@@ -560,13 +1185,18 @@
                                 <span class="px-2.5 py-1 rounded-md bg-teal-50 dark:bg-teal-950/80 text-teal-600 dark:text-teal-300 text-xs font-mono">Professional UI</span>
                             </div>
                         </div>
-                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4">
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-4 gap-2">
                             <button onclick="openProjectModal('Cetywayo Attorneys', 'Professional web platform for a legal firm featuring service lists, contact booking options, and corporate presentation.', ['Legal Web', 'UI/UX', 'Responsive'])" class="text-xs font-bold text-indigo-600 dark:text-accent hover:underline flex items-center gap-1">
                                 View Details <i class="fa-solid fa-arrow-right text-[10px]"></i>
                             </button>
-                            <a href="https://www.cetywayoattorneys.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
-                                <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
-                            </a>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPreview('Cetywayo Attorneys', 'https://www.cetywayoattorneys.co.za')" class="inline-flex items-center px-3 py-1.5 rounded-lg border border-indigo-600 text-indigo-600 dark:text-accent dark:border-accent hover:bg-indigo-50 dark:hover:bg-slate-800 text-xs font-semibold transition-all">
+                                    <i class="fa-solid fa-eye mr-1.5 text-[10px]"></i> Preview
+                                </button>
+                                <a href="https://www.cetywayoattorneys.co.za" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition-all">
+                                    <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Live Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -902,6 +1532,32 @@
         </div>
     </div>
 
+    <!-- Live Preview Modal -->
+    <div id="previewModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+        <div class="bg-white dark:bg-darkcard w-full max-w-6xl h-[90vh] rounded-2xl border border-slate-200 dark:border-darkborder shadow-2xl flex flex-col overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-slate-200 dark:border-darkborder">
+                <div class="min-w-0">
+                    <h3 id="previewTitle" class="text-base font-bold text-slate-900 dark:text-white truncate">Preview</h3>
+                    <p id="previewUrl" class="text-xs text-slate-500 dark:text-slate-400 font-mono truncate"></p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-xs font-semibold">
+                        <button id="btnDesktop" onclick="setPreviewDevice('desktop')" class="px-3 py-1.5 bg-indigo-600 text-white"><i class="fa-solid fa-desktop mr-1"></i> Desktop</button>
+                        <button id="btnMobile" onclick="setPreviewDevice('mobile')" class="px-3 py-1.5 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-mobile-screen mr-1"></i> Mobile</button>
+                    </div>
+                    <a id="previewOpen" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold">
+                        <i class="fa-solid fa-up-right-from-square mr-1.5 text-[10px]"></i> Open Site
+                    </a>
+                    <button onclick="closePreview()" aria-label="Close preview" class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+            </div>
+            <div class="flex-1 bg-slate-200 dark:bg-slate-900 flex justify-center overflow-hidden relative">
+                <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-sm gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading site…</div>
+                <iframe id="previewFrame" title="Site preview" class="relative h-full bg-white border-0 transition-all duration-300 w-full" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification Toast -->
     <div id="toast" class="fixed bottom-5 right-5 z-50 hidden px-5 py-3 rounded-xl bg-indigo-600 text-white font-medium text-sm shadow-xl flex items-center gap-2">
         <i class="fa-solid fa-circle-check"></i>
@@ -965,6 +1621,64 @@
         function closeProjectModal() {
             document.getElementById('projectModal').classList.add('hidden');
         }
+
+
+        // ---- Live preview thumbnails ----
+        function fitThumbs() {
+            document.querySelectorAll('.preview-thumb').forEach(box => {
+                const w = +box.dataset.w, h = +box.dataset.h;
+                const scale = box.clientWidth / w;
+                box.style.height = (h * scale) + 'px';
+                const f = box.querySelector('iframe');
+                if (f) f.style.transform = 'scale(' + scale + ')';
+            });
+        }
+        fitThumbs();
+        window.addEventListener('resize', fitThumbs);
+
+        const thumbObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const f = entry.target.querySelector('iframe[data-src]');
+                    if (f) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+                    thumbObserver.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '200px' });
+        document.querySelectorAll('.preview-thumb').forEach(el => thumbObserver.observe(el));
+
+        // ---- Full preview modal ----
+        function openPreview(title, url) {
+            document.getElementById('previewTitle').innerText = title;
+            document.getElementById('previewUrl').innerText = url;
+            document.getElementById('previewOpen').href = url;
+            document.getElementById('previewFrame').src = url;
+            setPreviewDevice('desktop');
+            document.getElementById('previewModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePreview() {
+            document.getElementById('previewModal').classList.add('hidden');
+            document.getElementById('previewFrame').src = 'about:blank';
+            document.body.style.overflow = '';
+        }
+        function setPreviewDevice(mode) {
+            const f = document.getElementById('previewFrame');
+            const d = document.getElementById('btnDesktop'), m = document.getElementById('btnMobile');
+            const on = ['bg-indigo-600', 'text-white'], off = ['text-slate-600', 'dark:text-slate-300'];
+            if (mode === 'mobile') {
+                f.classList.remove('w-full'); f.style.width = '390px';
+                m.classList.add(...on); m.classList.remove(...off);
+                d.classList.remove(...on); d.classList.add(...off);
+            } else {
+                f.classList.add('w-full'); f.style.width = '';
+                d.classList.add(...on); d.classList.remove(...off);
+                m.classList.remove(...on); m.classList.add(...off);
+            }
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closePreview(); closeProjectModal(); }
+        });
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
